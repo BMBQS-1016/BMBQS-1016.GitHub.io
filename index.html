@@ -758,6 +758,204 @@
             overflow-y: hidden;
             /* 隐藏垂直方向的溢出内容，避免任何可能的垂直滚动 */
         }
+
+        /* ========== 课程弹窗样式 ========== */
+        .course-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(60, 50, 70, 0.45);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        .course-modal-overlay.show {
+            display: flex;
+        }
+
+        .course-modal {
+            background: linear-gradient(160deg, #FEFAFD 0%, #FDF5FF 40%, #F9F3FE 100%);
+            border: 1px solid rgba(233, 225, 240, 0.8);
+            border-radius: 24px;
+            padding: 32px 24px 24px;
+            max-width: 340px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow:
+                0 20px 50px rgba(120, 90, 150, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                inset 0 -2px 8px rgba(196, 181, 253, 0.1);
+            animation: modalPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            /* 保证光晕不溢出 */
+        }
+
+        /* 右上角装饰光点 */
+        .course-modal::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle, rgba(248, 165, 184, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 确保弹窗内容在光点上方 */
+        .course-modal>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .course-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: #7A6F80;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px;
+        }
+
+        .course-modal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            /* 新增 */
+            align-items: center;
+            /* 新增 */
+            justify-content: center;
+            /* 新增 */
+            width: 80px;
+            /* 新增，固定容器宽度 */
+            height: 80px;
+            /* 新增，固定容器高度 */
+            margin-left: auto;
+            /* 居中 */
+            margin-right: auto;
+            /* 居中 */
+        }
+
+        .course-modal-icon img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .course-modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #3B2E40;
+            margin-bottom: 6px;
+        }
+
+        .course-modal-tag {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .course-modal-desc {
+            font-size: 0.9rem;
+            color: #54495A;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+
+        .course-modal-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #A855F7;
+            background: #EDE7FF;
+            border-radius: 12px;
+            padding: 10px 16px;
+            margin-bottom: 20px;
+        }
+
+        .course-modal-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #C4B5FD, #F8A5B8);
+            color: #fff;
+            border: none;
+            border-radius: 28px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 6px 20px rgba(196, 181, 253, 0.4);
+        }
+
+        .course-modal-btn:active {
+            transform: scale(0.96);
+        }
+
+        .course-modal-brand {
+            margin-top: 8px;
+            padding: 12px 0;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #54495A;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-shadow: 0 1px 2px rgba(99, 74, 199, 0.2);
+        }
+
+        .course-modal-brand::before,
+        .course-modal-brand::after {
+            content: '✿';
+            font-size: 1.2rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #C4B5FD, #F8A5B8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
     </style>
 </head>
 
@@ -793,7 +991,7 @@
             </p>
             <div class="hero-cta-group">
                 <a href="tel:17752164436" class="btn-primary">📞 立即咨询</a>
-                <a href="#coursesSection" class="btn-outline">查看课程 ↓</a>
+                <a href="#coursesSection" class="btn-outline">查看课程</a>
             </div>
             <div class="hero-visual">
                 <div class="hero-stat-card">
@@ -860,7 +1058,7 @@
                 少儿课程
             </h3>
             <div class="course-list">
-                <div class="course-card" onclick="showToast('少儿舞蹈')">
+                <div class="course-card" onclick="openCourseModal('dance')">
                     <div class="course-icon-wrap c1">
                         <img src="images/dance.png"
                             style="width: 100%; height: 100%; object-fit: cover; display: block;">
@@ -870,7 +1068,7 @@
                         <div class="course-meta">灵动舞姿塑气质，翩翩少年绽风采 | 培养形体气质</div><span class="course-badge hot">热门</span>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('古筝启蒙')">
+                <div class="course-card" onclick="openCourseModal('zither')">
                     <div class="course-icon-wrap c3">
                         <img src="images/guzheng.svg"
                             style="width: 80%; height: 80%; object-fit: cover; display: block;">
@@ -880,35 +1078,35 @@
                         <div class="course-meta">指尖抚古韵，琴声润童心 | 古典韵律熏陶</div><span class="course-badge hot">热门</span>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('少儿钢琴')">
+                <div class="course-card" onclick="openCourseModal('piano')">
                     <div class="course-icon-wrap c2">🎹</div>
                     <div class="course-info">
                         <h3>钢琴</h3>
                         <div class="course-meta">黑白键筑乐章 | 音律启蒙筑成长</div>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('硬笔/软笔书法')">
+                <div class="course-card" onclick="openCourseModal('calligraphy')">
                     <div class="course-icon-wrap c1">✍️</div>
                     <div class="course-info">
                         <h3>书法</h3>
                         <div class="course-meta">提笔练心性，墨香养风骨 | 静心习字，卷面加分</div>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('口才与表演')">
+                <div class="course-card" onclick="openCourseModal('speech')">
                     <div class="course-icon-wrap c2">🎤</div>
                     <div class="course-info">
                         <h3>口才表演</h3>
                         <div class="course-meta">朗诵/主持/故事 | 自信开口表达，舞台勇敢发光</div>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('跆拳道')">
+                <div class="course-card" onclick="openCourseModal('taekwondo')">
                     <div class="course-icon-wrap c3">🥋</div>
                     <div class="course-info">
                         <h3>跆拳道</h3>
                         <div class="course-meta">强身健体磨意志 | 礼仪修身育品格</div>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('少儿模特')">
+                <div class="course-card" onclick="openCourseModal('model')">
                     <div class="course-icon-wrap c1">
                         <img src="images/model.svg" style="width: 80%; height: 80%; object-fit: cover; display: block;">
                     </div>
@@ -917,7 +1115,7 @@
                         <div class="course-meta">锤炼体态气场 | 塑造自信模样</div>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('少儿声乐')">
+                <div class="course-card" onclick="openCourseModal('vocal')">
                     <div class="course-icon-wrap c2">🎶</div>
                     <div class="course-info">
                         <h3>声乐</h3>
@@ -932,7 +1130,7 @@
                 成人课程
             </h3>
             <div class="course-list">
-                <div class="course-card" onclick="showToast('成人舞蹈')">
+                <div class="course-card" onclick="openCourseModal('adult_dance')">
                     <div class="course-icon-wrap c3">
                         <img src="images/dance2.svg"
                             style="width: 90%; height: 90%; object-fit: cover; display: block;">
@@ -942,14 +1140,14 @@
                         <div class="course-meta">舞动舒缓身心 | 跳出优雅姿态</div><span class="course-badge hot">热门</span>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('成人古筝')">
+                <div class="course-card" onclick="openCourseModal('adult_zither')">
                     <div class="course-icon-wrap c1">🎵</div>
                     <div class="course-info">
                         <h3>古筝</h3>
                         <div class="course-meta">闲坐抚弦听音 | 静心养性</div>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('形体礼仪')">
+                <div class="course-card" onclick="openCourseModal('body')">
                     <div class="course-icon-wrap c2">
                         <img src="images/yoga.svg" style="width: 80%; height: 80%; object-fit: cover; display: block;">
                     </div>
@@ -958,7 +1156,7 @@
                         <div class="course-meta">雕琢优美线条 | 蜕变精致体态</div>
                     </div>
                 </div>
-                <div class="course-card" onclick="showToast('成人声乐')">
+                <div class="course-card" onclick="openCourseModal('adult_vocal')">
                     <div class="course-icon-wrap c3">🎤</div>
                     <div class="course-info">
                         <h3>声乐</h3>
@@ -1333,6 +1531,135 @@
             animate();
         })();
 
+        // ========== 课程弹窗逻辑 ==========
+        const courseData = {
+            dance: {
+                icon: '<img src="images/dance.png" style="width: 100%; height: 100%; object-fit: cover; display: block;">',
+                title: '少儿舞蹈',
+                tag: '热门',
+                tagClass: 'hot',
+                desc: '包含中国舞基础、芭蕾形体训练。通过律动培养节奏感和身体协调性，塑造优雅气质。',
+                price: '💰 每期16课时 · 1280元（含服装）'
+            },
+            zither: {
+                icon: '<img src="images/guzheng.svg" style="width: 80%; height: 80%; object-fit: cover; display: block;">',
+                title: '古筝启蒙',
+                tag: '热门',
+                tagClass: 'hot',
+                desc: '从识谱到弹奏经典曲目，1对1指导。适合零基础孩子，感受传统乐器之美。',
+                price: '💰 每期12课时 · 1500元（提供上课用琴）'
+            },
+            piano: {
+                icon: '🎹',
+                title: '少儿钢琴',
+                tag: '',
+                tagClass: '',
+                desc: '采用趣味手指训练法，结合儿歌弹唱。一对一教学，进度根据孩子情况灵活调整。',
+                price: '💰 每期16课时 · 1600元（免费练琴）'
+            },
+            calligraphy: {
+                icon: '✍️',
+                title: '硬笔/软笔书法',
+                tag: '',
+                tagClass: '',
+                desc: '硬笔纠正握笔姿势，提升卷面分；软笔学习楷书、隶书，培养专注力与耐心。',
+                price: '💰 每期16课时 · 980元（含教材文具）'
+            },
+            speech: {
+                icon: '🎤',
+                title: '口才与表演',
+                tag: '',
+                tagClass: '',
+                desc: '朗诵、主持、讲故事训练，帮助孩子克服胆怯，自信表达。定期举办汇报演出。',
+                price: '💰 每期14课时 · 1180元'
+            },
+            taekwondo: {
+                icon: '🥋',
+                title: '跆拳道',
+                tag: '',
+                tagClass: '',
+                desc: '礼仪教育与体能训练并重，学习品势、腿法，增强体质，培养坚韧品格。',
+                price: '💰 每期16课时 · 1080元（送道服）'
+            },
+            model: {
+                icon: '<img src="images/model.svg" style="width: 80%; height: 80%; object-fit: cover; display: block;">',
+                title: '少儿模特',
+                tag: '',
+                tagClass: '',
+                desc: 'T台走秀、镜头感训练，改善体态，提升气场。提供平面拍摄和走秀展示机会。',
+                price: '💰 每期12课时 · 1380元'
+            },
+            vocal: {
+                icon: '🎶',
+                title: '少儿声乐',
+                tag: '',
+                tagClass: '',
+                desc: '科学发声方法，学习儿童歌曲和舞台表演。保护嗓音的同时，快乐歌唱。',
+                price: '💰 每期14课时 · 1200元'
+            },
+            adult_dance: {
+                icon: '<img src="images/dance2.svg" style="width: 90%; height: 90%; object-fit: cover; display: block;">',
+                title: '成人舞蹈',
+                tag: '热门',
+                tagClass: 'hot',
+                desc: '民族舞、现代舞基础与成品舞。工作之余释放压力，提升柔韧度和体态美感。',
+                price: '💰 每期12课时 · 980元（可约晚间时段）'
+            },
+            adult_zither: {
+                icon: '🎵',
+                title: '成人古筝',
+                tag: '',
+                tagClass: '',
+                desc: '成人零基础友好，学习经典筝曲。一人一筝，在琴音中静心养性。',
+                price: '💰 每期10课时 · 1600元'
+            },
+            body: {
+                icon: '	<img src="images/yoga.svg" style="width: 80%; height: 80%; object-fit: cover; display: block;">',
+                title: '形体塑造',
+                tag: '',
+                tagClass: '',
+                desc: '体态矫正、芭蕾基训、拉伸训练。改善圆肩驼背，提升气质，久坐办公族首选。',
+                price: '💰 每期12课时 · 1080元'
+            },
+            adult_vocal: {
+                icon: '🎤',
+                title: '成人声乐',
+                tag: '',
+                tagClass: '',
+                desc: 'K歌技巧提升，气息训练，音准矫正。让你在任何场合都能自信开口。',
+                price: '💰 每期10课时 · 1400元'
+            }
+        };
+
+        window.openCourseModal = function (courseId) {
+            const data = courseData[courseId];
+            if (!data) return;
+
+            document.getElementById('modalIcon').innerHTML = data.icon;
+            document.getElementById('modalTitle').textContent = data.title;
+
+            const tagEl = document.getElementById('modalTag');
+            tagEl.textContent = data.tag;
+            // 设置标签样式（如果无标签则隐藏）
+            if (data.tag) {
+                tagEl.style.display = 'inline-block';
+                tagEl.className = 'course-modal-tag course-badge ' + data.tagClass;
+            } else {
+                tagEl.style.display = 'none';
+            }
+
+            document.getElementById('modalDesc').textContent = data.desc;
+            document.getElementById('modalPrice').textContent = data.price;
+
+            document.getElementById('courseModalOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden'; // 防止背后页面滚动
+        };
+
+        window.closeCourseModal = function () {
+            document.getElementById('courseModalOverlay').classList.remove('show');
+            document.body.style.overflow = '';
+        };
+
         // 获取模态框元素
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
@@ -1363,7 +1690,18 @@
             e.stopPropagation();
         });
     </script>
-
+    <!-- 课程详情弹窗 -->
+    <div class="course-modal-overlay" id="courseModalOverlay" onclick="closeCourseModal()">
+        <div class="course-modal" id="courseModal" onclick="event.stopPropagation()">
+            <button class="course-modal-close" onclick="closeCourseModal()">✕</button>
+            <div class="course-modal-icon" id="modalIcon"></div>
+            <h2 class="course-modal-title" id="modalTitle"></h2>
+            <div class="course-modal-tag" id="modalTag"></div>
+            <div class="course-modal-desc" id="modalDesc"></div>
+            <div class="course-modal-price" id="modalPrice"></div>
+            <div class="course-modal-brand">月亮艺术培训中心</div>
+        </div>
+    </div>
 </body>
 
 </html>
